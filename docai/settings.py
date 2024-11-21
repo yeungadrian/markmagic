@@ -8,6 +8,10 @@ class TableSettings(BaseModel):
     tablefmt: Literal[*tabulate_formats] = "github"
     showindex: bool = True
 
+class ExcelSettings(BaseModel):
+    skip_empty_area: bool = False
+
 
 class Settings(BaseModel):
     tables: TableSettings = TableSettings()
+    excel: ExcelSettings = ExcelSettings()

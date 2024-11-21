@@ -14,7 +14,9 @@ def parse_excel(
     documents = []
     for sheet_name in workbook.sheet_names:
         calamine_sheet = workbook.get_sheet_by_name(sheet_name)
-        tabular_data = calamine_sheet.to_python(skip_empty_area=False)
+        tabular_data = calamine_sheet.to_python(
+            skip_empty_area=settings.excel.skip_empty_area
+        )
         documents.append(
             Document(
                 content=tabulate(
