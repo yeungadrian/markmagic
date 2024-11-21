@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class MetaData(BaseModel):
     filename: str
-    sheet_name: str | None
+    sheet_name: str | None = None
 
 
 class Document(BaseModel):
