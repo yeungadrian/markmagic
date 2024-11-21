@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 class TableSettings(BaseModel):
     # TODO: Check unpacking list[str] into Literal is fine
+    # Preference to not maintain list in sync with tabulate
     tablefmt: Literal[*tabulate_formats] = "github"  # type: ignore[valid-type]
     showindex: bool = True
 
