@@ -5,8 +5,10 @@ from pydantic import BaseModel
 
 
 class TableSettings(BaseModel):
-    tablefmt: Literal[*tabulate_formats] = "github"
+    # TODO: Check unpacking list[str] into Literal is fine
+    tablefmt: Literal[*tabulate_formats] = "github"  # type: ignore[valid-type]
     showindex: bool = True
+
 
 class ExcelSettings(BaseModel):
     skip_empty_area: bool = False

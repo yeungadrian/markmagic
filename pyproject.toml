@@ -19,3 +19,13 @@ dev = [
     "pytest>=8.3.3",
     "rich>=13.9.4",
 ]
+
+[tool.mypy]
+files = ["docai", "tests"]
+strict = true
+enable_error_code = [
+  "redundant-expr",
+  "truthy-bool",
+  "ignore-without-code",
+]
+disallow_untyped_decorators = false
