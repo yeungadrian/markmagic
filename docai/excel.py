@@ -7,7 +7,7 @@ from docai.document import Document, MetaData
 from docai.settings import Settings
 
 
-def parse_excel(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
+def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
     """
     Convert excel into list of documents.
 
@@ -42,5 +42,4 @@ def parse_excel(file: IO[bytes], filename: str, settings: Settings | None = None
                 metadata=MetaData(sheet_name=sheet_name, filename=filename),
             )
         )
-
     return documents

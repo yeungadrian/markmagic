@@ -1,9 +1,9 @@
 from io import BytesIO
 
-from docai.docx import parse_docx
+from docai.docx import convert_docx
 
 
-def test_parse_excel(msft_pr_docx: tuple[BytesIO, str]) -> None:
+def test_convert_excel(msft_pr_docx: tuple[BytesIO, str]) -> None:
     """
     Test parse docx function.
 
@@ -12,5 +12,5 @@ def test_parse_excel(msft_pr_docx: tuple[BytesIO, str]) -> None:
     msft_pr_docx : tuple[BytesIO, str]
         _description_
     """
-    documents = parse_docx(msft_pr_docx[0], msft_pr_docx[1])
+    documents = convert_docx(msft_pr_docx[0], msft_pr_docx[1])
     assert len(documents) == 166

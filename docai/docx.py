@@ -7,7 +7,7 @@ from docai.document import Document, MetaData
 from docai.settings import Settings
 
 
-def parse_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
+def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
     """
     Convert docx into documents.
 
