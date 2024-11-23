@@ -16,9 +16,9 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
     file : IO[bytes]
         _description_
     filename : str
-        _description_
+        docx filename
     settings : Settings, optional
-        _description_, by default Settings()
+        conversion settings, by default Settings()
 
     Returns
     -------

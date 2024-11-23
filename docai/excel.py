@@ -39,7 +39,7 @@ def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = No
                     tablefmt=settings.tables.tablefmt,
                     showindex=settings.tables.showindex,
                 ),
-                metadata=MetaData(sheet_name=sheet_name, filename=filename),
+                metadata=MetaData(sheet_name=sheet_name, filename=filename, raw_table=tabular_data),
             )
         )
     return documents

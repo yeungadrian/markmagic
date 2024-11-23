@@ -7,8 +7,7 @@ from tabulate import tabulate_formats
 class TableSettings(BaseModel):
     """Table format settings."""
 
-    # TODO: Check unpacking list[str] into Literal is fine
-    # Preference to not maintain list in sync with tabulate
+    # Dynamic list to sync with tabulate
     tablefmt: Literal[*tabulate_formats] = "github"  # type: ignore[valid-type]
     showindex: bool = True
 

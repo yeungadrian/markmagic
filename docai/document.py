@@ -1,3 +1,5 @@
+from datetime import date, datetime, time, timedelta
+
 from pydantic import BaseModel
 
 
@@ -6,6 +8,7 @@ class MetaData(BaseModel):
 
     filename: str
     sheet_name: str | None = None
+    raw_table: list[list[int | float | str | bool | time | date | datetime | timedelta]] | None = None
 
 
 class Document(BaseModel):
