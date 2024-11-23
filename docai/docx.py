@@ -7,9 +7,26 @@ from docai.document import Document, MetaData
 from docai.settings import Settings
 
 
-def parse_docx(
-    file: IO[bytes], filename: str, settings: Settings = Settings()
-) -> list[Document]:
+def parse_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
+    """
+    Convert docx into documents.
+
+    Parameters
+    ----------
+    file : IO[bytes]
+        _description_
+    filename : str
+        _description_
+    settings : Settings, optional
+        _description_, by default Settings()
+
+    Returns
+    -------
+    list[Document]
+        _description_
+    """
+    if settings is None:
+        settings = Settings()
     documents = []
     for content in docx.Document(file).iter_inner_content():
         if isinstance(content, docx.table.Table):

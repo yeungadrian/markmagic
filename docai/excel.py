@@ -7,16 +7,31 @@ from docai.document import Document, MetaData
 from docai.settings import Settings
 
 
-def parse_excel(
-    file: IO[bytes], filename: str, settings: Settings = Settings()
-) -> list[Document]:
+def parse_excel(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
+    """
+    Convert excel into list of documents.
+
+    Parameters
+    ----------
+    file : IO[bytes]
+        _description_
+    filename : str
+        _description_
+    settings : Settings, optional
+        _description_, by default Settings()
+
+    Returns
+    -------
+    list[Document]
+        _description_
+    """
+    if settings is None:
+        settings = Settings()
     workbook = CalamineWorkbook.from_object(file)
     documents = []
     for sheet_name in workbook.sheet_names:
         calamine_sheet = workbook.get_sheet_by_name(sheet_name)
-        tabular_data = calamine_sheet.to_python(
-            skip_empty_area=settings.excel.skip_empty_area
-        )
+        tabular_data = calamine_sheet.to_python(skip_empty_area=settings.excel.skip_empty_area)
         documents.append(
             Document(
                 content=tabulate(
