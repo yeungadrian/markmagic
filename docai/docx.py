@@ -38,7 +38,7 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
                         tablefmt=settings.tables.tablefmt,
                         showindex=settings.tables.showindex,
                     ),
-                    metadata=MetaData(filename=filename),
+                    metadata=MetaData(filename=filename, table=True, raw_table=tabular_data),
                 )
             )
         elif isinstance(content, docx.text.paragraph.Paragraph):

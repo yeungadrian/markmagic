@@ -8,6 +8,7 @@ class MetaData(BaseModel):
 
     filename: str
     sheet_name: str | None = None
+    table: bool | None = False
     raw_table: list[list[int | float | str | bool | time | date | datetime | timedelta]] | None = None
 
 
