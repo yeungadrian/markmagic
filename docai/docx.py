@@ -45,7 +45,7 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
             # TODO: Handle different styles, lists, headings etc
             documents.append(
                 Document(
-                    content=content.text,
+                    content=content.text + "\n",
                     metadata=MetaData(filename=filename),
                 )
             )
