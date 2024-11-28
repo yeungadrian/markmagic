@@ -42,10 +42,10 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
                 )
             )
         elif isinstance(content, docx.text.paragraph.Paragraph):
-            # TODO: Handle different styles, lists, headings etc
+            # TODO: Format different styles, lists, headings etc
             documents.append(
                 Document(
-                    content=content.text + "\n",
+                    content=content.text,
                     metadata=MetaData(filename=filename),
                 )
             )
