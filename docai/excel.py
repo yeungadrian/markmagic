@@ -14,16 +14,16 @@ def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = No
     Parameters
     ----------
     file : IO[bytes]
-        _description_
+        The excel file as a byte stream.
     filename : str
-        _description_
+        The name of the excel file.
     settings : Settings, optional
-        _description_, by default Settings()
+        Conversion settings, by default None. If not provided, default settings will be used.
 
     Returns
     -------
     list[Document]
-        _description_
+        A list of Document objects containing the converted content and metadata.
     """
     if settings is None:
         settings = Settings()
