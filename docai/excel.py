@@ -3,13 +3,13 @@ from typing import IO
 from python_calamine import CalamineWorkbook
 from tabulate import tabulate
 
-from docai.document import Document, MetaData
+from docai.models import Chunk, Document, MetaData
 from docai.settings import Settings
 
 
-def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
+def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = None) -> Document:
     """
-    Convert excel into list of documents.
+    Convert excel into list of chunks.
 
     Parameters
     ----------
@@ -28,12 +28,12 @@ def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = No
     if settings is None:
         settings = Settings()
     workbook = CalamineWorkbook.from_object(file)
-    documents = []
+    chunks = []
     for sheet_name in workbook.sheet_names:
         calamine_sheet = workbook.get_sheet_by_name(sheet_name)
         tabular_data = calamine_sheet.to_python(skip_empty_area=settings.excel.skip_empty_area)
-        documents.append(
-            Document(
+        chunks.append(
+            Chunk(
                 content=tabulate(
                     tabular_data,
                     tablefmt=settings.tables.tablefmt,
@@ -44,4 +44,4 @@ def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = No
                 ),
             )
         )
-    return documents
+    return Document(chunks=chunks)

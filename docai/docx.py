@@ -3,13 +3,13 @@ from typing import IO
 import docx
 from tabulate import tabulate
 
-from docai.document import Document, MetaData
+from docai.models import Chunk, Document, MetaData
 from docai.settings import Settings
 
 
-def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
+def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> Document:
     """
-    Convert a DOCX file into a list of Document objects.
+    Convert a DOCX file into a list of chunk objects.
 
     Parameters
     ----------
@@ -22,17 +22,17 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
 
     Returns
     -------
-    list[Document]
-        A list of Document objects containing the converted content and metadata.
+    list[Chunk]
+        A list of Chunk objects containing the converted content and metadata.
     """
     if settings is None:
         settings = Settings()
-    documents = []
-    for content in docx.Document(file).iter_inner_content():
+    chunks = []
+    for content in docx.Chunk(file).iter_inner_content():
         if isinstance(content, docx.table.Table):
             tabular_data = [[cell.text for cell in row.cells] for row in content.rows]
-            documents.append(
-                Document(
+            chunks.append(
+                Chunk(
                     content=tabulate(
                         tabular_data,
                         tablefmt=settings.tables.tablefmt,
@@ -43,10 +43,10 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
             )
         elif isinstance(content, docx.text.paragraph.Paragraph):
             # TODO: Format different styles, lists, headings etc
-            documents.append(
-                Document(
+            chunks.append(
+                Chunk(
                     content=content.text,
                     metadata=MetaData(filename=filename),
                 )
             )
-    return documents
+    return Document(chunks=chunks)

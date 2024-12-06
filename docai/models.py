@@ -10,11 +10,20 @@ class MetaData(BaseModel):
     sheet_name: str | None = None
     table: bool | None = False
     raw_table: list[list[int | float | str | bool | time | date | datetime | timedelta]] | None = None
-    tokens: int = 0
+
+
+class Chunk(BaseModel):
+    """Chunk model."""
+
+    content: str
+    metadata: MetaData
+    # Properties used while splitting / merging
+    estimated_tokens: int = 0
+    chunked: bool | None = False
+    overlap_start: int | None = None
 
 
 class Document(BaseModel):
     """Document model."""
 
-    content: str
-    metadata: MetaData
+    chunks: list[Chunk]
