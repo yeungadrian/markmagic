@@ -9,7 +9,7 @@ from docai.settings import Settings
 
 def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> Document:
     """
-    Convert a DOCX file into a list of chunk objects.
+    Convert a DOCX file into a Document object.
 
     Parameters
     ----------
@@ -22,13 +22,13 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
 
     Returns
     -------
-    list[Chunk]
-        A list of Chunk objects containing the converted content and metadata.
+    Document
+        A list of chunks containing the converted content and metadata.
     """
     if settings is None:
         settings = Settings()
     chunks = []
-    for content in docx.Chunk(file).iter_inner_content():
+    for content in docx.Document(file).iter_inner_content():
         if isinstance(content, docx.table.Table):
             tabular_data = [[cell.text for cell in row.cells] for row in content.rows]
             chunks.append(

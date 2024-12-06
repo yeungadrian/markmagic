@@ -9,7 +9,7 @@ from docai.settings import Settings
 
 def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = None) -> Document:
     """
-    Convert excel into list of chunks.
+    Convert excel into a Document object.
 
     Parameters
     ----------
@@ -22,8 +22,8 @@ def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = No
 
     Returns
     -------
-    list[Document]
-        A list of Document objects containing the converted content and metadata.
+    Document
+        A list of chunks containing the converted content and metadata.
     """
     if settings is None:
         settings = Settings()
