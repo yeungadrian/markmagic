@@ -1,0 +1,121 @@
+import re
+from collections.abc import Callable
+
+from pydantic import BaseModel
+
+from docai.models import Chunk, Document
+
+
+def _get_n_tokens(text: str) -> int:
+    text = text.strip()
+    if text:
+        return 1 + text.strip().count(" ")
+    else:
+        return 0
+
+
+class Chunker(BaseModel):
+    """Chunking class."""
+
+    chunk_size: int
+    chunk_overlap: int = 0
+    separators: tuple[str, ...] = ("\n\n", "\n", ".", " ", "")
+    get_token_length: Callable[[str], int] = _get_n_tokens
+
+    @property
+    def split_target(self) -> int:
+        """How small to split chunks into."""
+        return self.chunk_overlap if self.chunk_overlap > 0 else self.chunk_size
+
+    def _split_document(self, document: Document) -> list[Chunk]:
+        # Check token count per chunk
+        for chunk in document.chunks:
+            chunk.estimated_tokens = self.get_token_length(chunk.content)
+            chunk.chunked = chunk.estimated_tokens < self.split_target
+        # Keep chunking until all chunks less than target
+        splits = []  # Final result
+        for chunk in document.chunks:
+            # Recursively break chunks
+            current_chunks = [chunk]
+            for separator in self.separators:
+                if all(i.chunked for i in current_chunks):
+                    break
+                else:
+                    current_chunks = self._split_chunks(current_chunks, separator)
+            splits.extend(current_chunks)
+        return splits
+
+    def _split_chunks(self, chunks: list[Chunk], separator: str) -> list[Chunk]:
+        split_chunks = []
+        for chunk in chunks:
+            if chunk.chunked:
+                split_chunks.append(chunk)
+            else:
+                if chunk.table:
+                    chunk.chunked = True
+                    split_chunks.append(chunk)
+                else:
+                    split_chunks.extend(self._split_chunk(chunk, separator))
+        return split_chunks
+
+    def _split_chunk(
+        self,
+        chunk: list[Chunk],
+        separator: str,
+    ) -> list[Chunk]:
+        _splits = re.split(f"({re.escape(separator)})", chunk.content)
+        # Add separator to chunks
+        splits = [_splits[i] + _splits[i + 1] for i in range(0, len(_splits) - 1, 2)]
+        if len(_splits) % 2 == 0:
+            splits += _splits[-1:]
+        splits = splits + [_splits[-1]]
+        # Construct chunk object and measure tokens
+        chunks = []
+        for i in splits:
+            n_tokens = self.get_token_length(i)
+            chunks.append(Chunk(content=i, tokens=n_tokens, chunked=self.split_target >= n_tokens))
+        return chunks
+
+    def _merge_splits(self, splits: list[list[Chunk]]) -> list[Chunk]:
+        merged = []
+        current_merge = []
+        tokens = 0
+        overlap_tokens = 0
+        overlap_start = None
+
+        for split in splits:
+            if tokens + split.tokens < self.chunk_size:
+                current_merge.append(split)
+                tokens += split.tokens
+            elif overlap_tokens + split.tokens < self.chunk_overlap:
+                if overlap_start is None:
+                    # Count the number of characters before we start overlap
+                    overlap_start = sum(len(chunk.content) for chunk in current_merge)
+                current_merge.append(split)
+                overlap_tokens += split.tokens
+            else:
+                # Merge current_merge into single Chunk before appending
+                merged_content = "".join(chunk.content for chunk in current_merge)
+                # TODO: Estimated tokens
+                merged_tokens = self.get_token_length(merged_content)
+                merged_chunk = Chunk(
+                    content=merged_content, tokens=merged_tokens, overlap_start=overlap_start
+                )
+                merged.append([merged_chunk])
+
+                # Start a new chunk
+                tokens = 0
+                overlap_tokens = 0
+                current_merge = []
+                overlap_start = None
+                current_merge.append(split)
+                tokens += split.tokens
+
+        # Merge the last current_merge into a single Chunk before appending
+        if current_merge:
+            merged_content = "".join(chunk.content for chunk in current_merge)
+            merged_tokens = self.get_token_length(merged_content)
+            merged_chunk = Chunk(content=merged_content, tokens=merged_tokens, overlap_start=overlap_start)
+            merged.append([merged_chunk])
+
+        return merged
