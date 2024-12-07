@@ -3,11 +3,11 @@ from typing import IO
 import docx
 from tabulate import tabulate
 
-from docai.models import Chunk, Document, MetaData
+from docai.models import Chunk, MetaData, PartitionedDocument
 from docai.settings import Settings
 
 
-def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> Document:
+def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> PartitionedDocument:
     """
     Convert a DOCX file into a Document object.
 
@@ -38,15 +38,14 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
                         tablefmt=settings.tables.tablefmt,
                         showindex=settings.tables.showindex,
                     ),
-                    metadata=MetaData(filename=filename, table=True, raw_table=tabular_data),
-                )
+                    table=True,
+                ),
             )
         elif isinstance(content, docx.text.paragraph.Paragraph):
             # TODO: Format different styles, lists, headings etc
             chunks.append(
                 Chunk(
                     content=content.text,
-                    metadata=MetaData(filename=filename),
                 )
             )
-    return Document(chunks=chunks)
+    return PartitionedDocument(chunks=chunks, metadata=MetaData(filename=filename))

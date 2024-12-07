@@ -3,11 +3,13 @@ from typing import IO
 from python_calamine import CalamineWorkbook
 from tabulate import tabulate
 
-from docai.models import Chunk, Document, MetaData
+from docai.models import Chunk, MetaData, PartitionedDocument
 from docai.settings import Settings
 
 
-def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = None) -> Document:
+def convert_excel(
+    file: IO[bytes], filename: str, settings: Settings | None = None
+) -> list[PartitionedDocument]:
     """
     Convert excel into a Document object.
 
@@ -28,20 +30,22 @@ def convert_excel(file: IO[bytes], filename: str, settings: Settings | None = No
     if settings is None:
         settings = Settings()
     workbook = CalamineWorkbook.from_object(file)
-    chunks = []
+    documents = []
     for sheet_name in workbook.sheet_names:
         calamine_sheet = workbook.get_sheet_by_name(sheet_name)
         tabular_data = calamine_sheet.to_python(skip_empty_area=settings.excel.skip_empty_area)
-        chunks.append(
-            Chunk(
-                content=tabulate(
-                    tabular_data,
-                    tablefmt=settings.tables.tablefmt,
-                    showindex=settings.tables.showindex,
-                ),
-                metadata=MetaData(
-                    sheet_name=sheet_name, filename=filename, table=True, raw_table=tabular_data
-                ),
-            )
+        document = PartitionedDocument(
+            chunks=[
+                Chunk(
+                    content=tabulate(
+                        tabular_data,
+                        tablefmt=settings.tables.tablefmt,
+                        showindex=settings.tables.showindex,
+                    ),
+                    table=True,
+                )
+            ],
+            metadata=MetaData(filename=filename, sheet_name=sheet_name),
         )
-    return Document(chunks=chunks)
+        documents.append(document)
+    return documents

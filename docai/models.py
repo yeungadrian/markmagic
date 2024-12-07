@@ -1,29 +1,41 @@
-from datetime import date, datetime, time, timedelta
-
 from pydantic import BaseModel
 
 
+class Chunk(BaseModel):
+    """Single section from converted document."""
+
+    content: str
+    table: bool | None = False
+    n_tokens: int = 0
+    chunked: bool | None = None
+
+
 class MetaData(BaseModel):
-    """Metadata model."""
+    """Shared metadata."""
+
+    filename: str
+    sheet_name: str | None = None
+
+
+class PartitionedDocument(BaseModel):
+    """Document model."""
+
+    chunks: list[Chunk]
+    metadata: MetaData
+
+
+class DocumentMetaData(BaseModel):
+    """Metadata for vectorstore."""
 
     filename: str
     sheet_name: str | None = None
     table: bool | None = False
-    raw_table: list[list[int | float | str | bool | time | date | datetime | timedelta]] | None = None
-
-
-class Chunk(BaseModel):
-    """Chunk model."""
-
-    content: str
-    metadata: MetaData
-    # Properties used while splitting / merging
-    estimated_tokens: int = 0
-    chunked: bool | None = False
+    estimated_tokens: int
     overlap_start: int | None = None
 
 
 class Document(BaseModel):
-    """Document model."""
+    """Document ready for vectorstore."""
 
-    chunks: list[Chunk]
+    content: str
+    metadata: DocumentMetaData

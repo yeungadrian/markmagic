@@ -13,4 +13,4 @@ def test_convert_docx(msft_pr_docx: tuple[BytesIO, str]) -> None:
         _description_
     """
     documents = convert_docx(msft_pr_docx[0], msft_pr_docx[1])
-    assert len(documents) == 166
+    assert len(documents.chunks) == 166
