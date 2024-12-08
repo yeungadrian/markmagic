@@ -7,7 +7,7 @@ class Chunk(BaseModel):
     content: str
     table: bool | None = False
     n_tokens: int = 0
-    chunked: bool | None = None
+    chunked: bool | None = False
 
 
 class MetaData(BaseModel):
