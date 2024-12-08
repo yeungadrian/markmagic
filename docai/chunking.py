@@ -31,7 +31,6 @@ class Chunker(BaseModel):
     def _split_document(self, document: PartitionedDocument) -> list[Chunk]:
         for chunk in document.chunks:
             # Check token count per chunk
-            # We only check the length of tokens once, then use approximation afterwards
             chunk.n_tokens = self.get_n_tokens(chunk.content)
             chunk.chunked = chunk.n_tokens < self.split_size
         splits = []
@@ -87,9 +86,9 @@ class Chunker(BaseModel):
         overlap_start: int | None,
         metadata: MetaData,
     ) -> Document:
-        # TODO: Clean ugliness
         # TODO: Reconsider how we join texts
-        merged_content = "".join(chunk.content for chunk in current_merge)
+        # TODO: Avoid: Sentence 1Sentence 2
+        merged_content = " ".join(chunk.content for chunk in current_merge)
         n_tokens = token_count + overlap_token_count
         merge = Document(
             content=merged_content,
@@ -103,38 +102,32 @@ class Chunker(BaseModel):
         return merge
 
     def _merge_splits(self, splits: list[Chunk], metadata: MetaData) -> list[Document]:
-        # TODO: Add metadata to merged splits.
         merges = []
-
         current_merge = []
         token_count = 0
         overlap_token_count = 0
         overlap_start = None
-
-        for split in splits:
-            if token_count + split.n_tokens < self.chunk_size:
-                current_merge.append(split)
-                token_count += split.n_tokens
-            elif overlap_token_count + split.n_tokens < self.chunk_overlap:
+        for s in splits:
+            if token_count + s.n_tokens < self.chunk_size:
+                current_merge.append(s)
+                token_count += s.n_tokens
+            elif overlap_token_count + s.n_tokens < self.chunk_overlap:
                 if overlap_start is None:
                     # Count the number of characters before we start overlap
                     overlap_start = sum(len(chunk.content) for chunk in current_merge)
-                current_merge.append(split)
-                overlap_token_count += split.n_tokens
+                current_merge.append(s)
+                overlap_token_count += s.n_tokens
             else:
                 # Merge current_merge into single Chunk before appending
                 merge = self._merge_split(
                     current_merge, token_count, overlap_token_count, overlap_start, metadata
                 )
                 merges.append(merge)
-
                 # Start a new chunk
-                token_count = split.n_tokens
+                current_merge = [s]
+                token_count = s.n_tokens
                 overlap_token_count = 0
-                current_merge = []
                 overlap_start = None
-                current_merge.append(split)
-
         # Merge the last current_merge into a single Chunk before appending
         merge = self._merge_split(current_merge, token_count, overlap_token_count, overlap_start, metadata)
         merges.append(merge)
