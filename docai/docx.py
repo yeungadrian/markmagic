@@ -7,9 +7,9 @@ from docai.models import Chunk, MetaData, PartitionedDocument
 from docai.settings import Settings
 
 
-def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> PartitionedDocument:
+def partition_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> PartitionedDocument:
     """
-    Convert a DOCX file into a Document object.
+    Partition a DOCX file into a PartitionedDocument.
 
     Parameters
     ----------
@@ -22,8 +22,8 @@ def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = Non
 
     Returns
     -------
-    Document
-        A list of chunks containing the converted content and metadata.
+    PartitionedDocument
+        A list of chunks for each paragraph or table, with metadata for DOCX file.
     """
     if settings is None:
         settings = Settings()

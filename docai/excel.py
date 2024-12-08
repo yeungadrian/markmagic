@@ -7,11 +7,11 @@ from docai.models import Chunk, MetaData, PartitionedDocument
 from docai.settings import Settings
 
 
-def convert_excel(
+def partition_excel(
     file: IO[bytes], filename: str, settings: Settings | None = None
 ) -> list[PartitionedDocument]:
     """
-    Convert excel into a Document object.
+    Partition each excel sheet into a PartitionedDocument.
 
     Parameters
     ----------
@@ -25,16 +25,16 @@ def convert_excel(
     Returns
     -------
     Document
-        A list of chunks containing the converted content and metadata.
+        A list of chunks, with metadata of excel file.
     """
     if settings is None:
         settings = Settings()
     workbook = CalamineWorkbook.from_object(file)
-    documents = []
+    partitions = []
     for sheet_name in workbook.sheet_names:
         calamine_sheet = workbook.get_sheet_by_name(sheet_name)
         tabular_data = calamine_sheet.to_python(skip_empty_area=settings.excel.skip_empty_area)
-        document = PartitionedDocument(
+        partition = PartitionedDocument(
             chunks=[
                 Chunk(
                     content=tabulate(
@@ -47,5 +47,5 @@ def convert_excel(
             ],
             metadata=MetaData(filename=filename, sheet_name=sheet_name),
         )
-        documents.append(document)
-    return documents
+        partitions.append(partition)
+    return partitions

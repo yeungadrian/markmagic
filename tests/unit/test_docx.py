@@ -1,16 +1,16 @@
 from io import BytesIO
 
-from docai.docx import convert_docx
+from docai.docx import partition_docx
 
 
-def test_convert_docx(msft_pr_docx: tuple[BytesIO, str]) -> None:
+def test_partition_docx(msft_pr_docx: tuple[BytesIO, str]) -> None:
     """
-    Test parse docx function.
+    Test partition docx function.
 
     Parameters
     ----------
     msft_pr_docx : tuple[BytesIO, str]
         _description_
     """
-    documents = convert_docx(msft_pr_docx[0], msft_pr_docx[1])
-    assert len(documents.chunks) == 166
+    documents = partition_docx(*msft_pr_docx)
+    assert len(documents.chunks) == 166 # Check number of sections

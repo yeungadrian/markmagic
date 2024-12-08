@@ -1,16 +1,16 @@
 from io import BytesIO
 
-from docai.excel import convert_excel
+from docai.excel import partition_excel
 
 
-def test_convert_excel(msft_fs_xlsx: tuple[BytesIO, str]) -> None:
+def test_partition_excel(msft_fs_xlsx: tuple[BytesIO, str]) -> None:
     """
-    Test parse excel function.
+    Test partition excel function.
 
     Parameters
     ----------
     msft_fs_xlsx : tuple[BytesIO, str]
         _description_
     """
-    documents = convert_excel(msft_fs_xlsx[0], msft_fs_xlsx[1])
-    assert len(documents) == 12
+    documents = partition_excel(*msft_fs_xlsx)
+    assert len(documents) == 12  # Check number of sheets
