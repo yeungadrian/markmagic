@@ -11,7 +11,7 @@ def partition_excel(
     file: IO[bytes], filename: str, settings: Settings | None = None
 ) -> list[PartitionedDocument]:
     """
-    Partition each excel sheet into a PartitionedDocument.
+    Partition an excel workbook.
 
     Parameters
     ----------

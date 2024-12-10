@@ -9,7 +9,7 @@ from docai.settings import Settings
 
 def partition_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> PartitionedDocument:
     """
-    Partition a DOCX file into a PartitionedDocument.
+    Partition a DOCX file.
 
     Parameters
     ----------
