@@ -9,13 +9,22 @@ from docai.models import Chunk, Document, DocumentMetaData, MetaData, Partitione
 def _get_n_tokens(text: str) -> int:
     text = text.strip()
     if text:
-        return 1 + text.strip().count(" ")
+        return 1 + text.count(" ")
     else:
         return 0
 
 
 class Chunker(BaseModel):
-    """Chunking class."""
+    """
+    Chunker class for splitting and merging documents based on token count and specified separators.
+
+    Attributes
+    ----------
+        chunk_size (int): The maximum number of tokens allowed in each chunk.
+        chunk_overlap (int, optional): The number of tokens to overlap between chunks. Defaults to 0.
+        separators (tuple[str, ...], optional): A tuple of strings used as separators for splitting text.
+        get_n_tokens (Callable[[str], int], optional): A callable function to get the number of tokens.
+    """
 
     chunk_size: int
     chunk_overlap: int = 0
@@ -23,7 +32,6 @@ class Chunker(BaseModel):
     get_n_tokens: Callable[[str], int] = _get_n_tokens
 
     @computed_field  # type: ignore[prop-decorator]
-    @property
     def split_size(self) -> int:
         """Maximum tokens for each split."""
         return self.chunk_overlap if self.chunk_overlap > 0 else self.chunk_size
@@ -33,7 +41,7 @@ class Chunker(BaseModel):
             # Check token count per chunk
             chunk.n_tokens = self.get_n_tokens(chunk.content)
             chunk.chunked = chunk.n_tokens < self.split_size
-        splits = []
+        split_chunks = []
         for chunk in document.chunks:
             # Recursively break chunks
             current_chunks = [chunk]
@@ -42,22 +50,22 @@ class Chunker(BaseModel):
                     break
                 else:
                     current_chunks = self._split_chunks(current_chunks, separator)
-            splits.extend(current_chunks)
-        return splits
+            split_chunks.extend(current_chunks)
+        return split_chunks
 
     def _split_chunks(self, chunks: list[Chunk], separator: str) -> list[Chunk]:
-        _splits = []
+        split_chunks = []
         for chunk in chunks:
             if chunk.chunked:
-                _splits.append(chunk)
+                split_chunks.append(chunk)
             else:
                 # TODO: Consider what to do with tables.
                 if chunk.table:
                     chunk.chunked = True
-                    _splits.append(chunk)
+                    split_chunks.append(chunk)
                 else:
-                    _splits.extend(self._split_chunk(chunk, separator))
-        return _splits
+                    split_chunks.extend(self._split_chunk(chunk, separator))
+        return split_chunks
 
     def _split_chunk(
         self,
@@ -65,6 +73,7 @@ class Chunker(BaseModel):
         separator: str,
     ) -> list[Chunk]:
         # Split text using separator
+        # TODO: Check regex edge cases.
         _splits = re.split(f"({re.escape(separator)})", chunk.content)
         # Add separator to chunks
         splits = [_splits[i] + _splits[i + 1] for i in range(0, len(_splits) - 1, 2)]
@@ -72,11 +81,11 @@ class Chunker(BaseModel):
             splits += _splits[-1:]
         splits = splits + [_splits[-1]]
         # Construct chunk object and measure tokens
-        chunks = []
+        split_chunks = []
         for i in splits:
             n_tokens = self.get_n_tokens(i)
-            chunks.append(Chunk(content=i, n_tokens=n_tokens, chunked=self.split_size >= n_tokens))
-        return chunks
+            split_chunks.append(Chunk(content=i, n_tokens=n_tokens, chunked=self.split_size >= n_tokens))
+        return split_chunks
 
     def _merge_split(
         self,
