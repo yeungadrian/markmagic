@@ -11,21 +11,21 @@ class Chunk(BaseModel):
 
 
 class MetaData(BaseModel):
-    """Shared metadata."""
+    """File metadata."""
 
     filename: str
     sheet_name: str | None = None
 
 
 class PartitionedDocument(BaseModel):
-    """Document model."""
+    """Partitioned document model."""
 
     chunks: list[Chunk]
     metadata: MetaData
 
 
 class DocumentMetaData(BaseModel):
-    """Metadata for vectorstore."""
+    """Metadata for single document vectorstore."""
 
     filename: str
     sheet_name: str | None = None
