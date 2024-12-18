@@ -15,7 +15,7 @@ class TableSettings(BaseModel):
 class ExcelSettings(BaseModel):
     """Excel format settings."""
 
-    skip_empty_area: bool = False
+    skip_empty_area: bool = True
 
 
 class Settings(BaseModel):
