@@ -12,10 +12,7 @@ nav:
   - Modules: modules.md
 plugins:
   - search
-  - mkdocstrings:
-      handlers:
-        python:
-          paths: [docai]
+  - mkdocstrings
 theme:
   name: material
   feature:

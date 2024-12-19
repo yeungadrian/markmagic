@@ -1,5 +1,5 @@
 [project]
-name = "DocAI2"
+name = "DocAI"
 version = "0.0.1"
 description = "Document AI"
 authors = [{ name = "Adrian Yeung", email = "yeungadrianjy@gmail.com" }]
