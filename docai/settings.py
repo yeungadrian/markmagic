@@ -9,7 +9,7 @@ class TableSettings(BaseModel):
 
     # Dynamic list to sync with tabulate
     tablefmt: str = "github"
-    showindex: bool = True
+    showindex: bool = False
     headers: str = "firstrow"
 
     @field_validator("tablefmt")

@@ -26,12 +26,11 @@ def convert_docx(file: IO[bytes], settings: Settings | None = None) -> str:
             tabular_data = [[re.sub(r"\s+", " ", cell.text).strip() for cell in row.cells] for row in content.rows]
             markdown += "\n\n" + tabulate(
                 tabular_data,
-                tablefmt=settings.tables.tablefmt,  # type: ignore
+                tablefmt=settings.tables.tablefmt,
                 showindex=settings.tables.showindex,
                 headers=settings.tables.headers,
             )
         else:
-            # TODO: Handle different styles, lists, headings etc
             if content.style:
                 style = str(content.style.name)
             else:
