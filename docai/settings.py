@@ -7,10 +7,8 @@ from tabulate import tabulate_formats
 class TableSettings(BaseModel):
     """Table format settings."""
 
-    # Dynamic list to sync with tabulate
     tablefmt: str = "github"
     showindex: bool = False
-    headers: str = "firstrow"
 
     @field_validator("tablefmt")
     def validate_tablefmt(cls, v: str) -> str:
