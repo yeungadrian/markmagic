@@ -1,52 +1,35 @@
+import re
 from typing import IO
 
 import docx
 from tabulate import tabulate
 
-from docai.document import Document, MetaData
 from docai.settings import Settings
 
 
-def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> list[Document]:
-    """
-    Convert docx into documents.
+def _style_text(text, style, separator):
+    text = "\n" + "- " + text if "List" in style else separator + text
+    return text
 
-    Parameters
-    ----------
-    file : IO[bytes]
-        _description_
-    filename : str
-        docx filename
-    settings : Settings, optional
-        conversion settings, by default Settings()
 
-    Returns
-    -------
-    list[Document]
-        _description_
-    """
+def convert_docx(file: IO[bytes], filename: str, settings: Settings | None = None) -> str:
+    """Convert docx into documents."""
     if settings is None:
         settings = Settings()
-    documents = []
-    for content in docx.Document(file).iter_inner_content():
+    markdown = ""
+    for n, content in enumerate(docx.Document(file).iter_inner_content()):
+        separator = "" if n == 0 else "\n\n"
         if isinstance(content, docx.table.Table):
-            tabular_data = [[cell.text for cell in row.cells] for row in content.rows]
-            documents.append(
-                Document(
-                    content=tabulate(
-                        tabular_data,
-                        tablefmt=settings.tables.tablefmt,
-                        showindex=settings.tables.showindex,
-                    ),
-                    metadata=MetaData(filename=filename, table=True, raw_table=tabular_data),
-                )
+            tabular_data = [
+                [re.sub(r"\s+", " ", cell.text).strip() for cell in row.cells] for row in content.rows
+            ]
+            markdown += "\n\n" + tabulate(
+                tabular_data,
+                tablefmt=settings.tables.tablefmt,
+                showindex=settings.tables.showindex,
+                headers=settings.tables.headers,
             )
         elif isinstance(content, docx.text.paragraph.Paragraph):
             # TODO: Handle different styles, lists, headings etc
-            documents.append(
-                Document(
-                    content=content.text,
-                    metadata=MetaData(filename=filename),
-                )
-            )
-    return documents
+            markdown += _style_text(content.text, content.style.name, separator)
+    return markdown
