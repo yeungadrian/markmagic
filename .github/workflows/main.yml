@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
-  quality:
+  quality-and-type-check:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
@@ -22,8 +22,11 @@ jobs:
       - name: Set up the environment
         uses: ./.github/actions/setup-python-env
 
+      - name: Run pre-commit
+        uses: uv run pre-commit run --all-files
 
-  tests-and-type-check:
+
+  tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
