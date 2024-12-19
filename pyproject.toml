@@ -5,15 +5,7 @@ description = "Document AI"
 authors = [{ name = "Adrian Yeung", email = "yeungadrianjy@gmail.com" }]
 readme = "README.md"
 keywords = ['python']
-requires-python = ">=3.11,<4.0"
-classifiers = [
-    "Intended Audience :: Developers",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-]
+requires-python = ">=3.10,<4.0"
 dependencies = [
     "pydantic>=2.10.4",
     "python-calamine>=0.3.1",
@@ -29,10 +21,6 @@ dev = [
     "pytest>=8.3.4",
     "tox-uv>=1.11.3",
 ]
-
-[project.urls]
-Homepage = "https://yeungadrian.github.io/DocAI/"
-Repository = "https://github.com/yeungadrian/DocAI"
 
 [tool.ruff]
 line-length = 108
@@ -84,7 +72,14 @@ max-doc-length = 108
 convention = "numpy"
 
 [tool.mypy]
-files = ["docai", "tests"]
+files = ["docai"]
+disallow_untyped_defs = true
+disallow_any_unimported = true
+no_implicit_optional = true
+check_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true
+show_error_codes = true
 strict = true
 enable_error_code = [
   "redundant-expr",
