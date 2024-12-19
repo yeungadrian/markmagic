@@ -23,14 +23,14 @@ jobs:
         uses: ./.github/actions/setup-python-env
 
       - name: Run pre-commit
-        run: uv run pre-commit run --all-files
+        run: uv run pre-commit run -a
 
 
   tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12"]
       fail-fast: false
     defaults:
       run:
