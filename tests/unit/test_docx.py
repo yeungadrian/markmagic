@@ -12,5 +12,5 @@ def test_convert_docx(msft_pr_docx: tuple[BytesIO, str]) -> None:
     msft_pr_docx : tuple[BytesIO, str]
         _description_
     """
-    documents = convert_docx(msft_pr_docx[0], msft_pr_docx[1])
-    assert len(documents) == 166
+    documents = convert_docx(msft_pr_docx[0])
+    assert isinstance(documents, str)

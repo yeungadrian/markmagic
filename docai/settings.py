@@ -1,3 +1,5 @@
+"""Settings for markdown conversion."""
+
 from typing import Literal
 
 from pydantic import BaseModel
@@ -10,6 +12,7 @@ class TableSettings(BaseModel):
     # Dynamic list to sync with tabulate
     tablefmt: Literal[*tabulate_formats] = "github"  # type: ignore[valid-type]
     showindex: bool = True
+    headers: str = "firstrow"
 
 
 class Settings(BaseModel):
