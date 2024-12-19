@@ -1,8 +1,6 @@
 """Settings for markdown conversion."""
 
-from typing import Literal
-
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from tabulate import tabulate_formats
 
 
@@ -10,9 +8,15 @@ class TableSettings(BaseModel):
     """Table format settings."""
 
     # Dynamic list to sync with tabulate
-    tablefmt: Literal[*tabulate_formats] = "github"  # type: ignore[valid-type]
+    tablefmt: str = "github"
     showindex: bool = True
     headers: str = "firstrow"
+
+    @field_validator("tablefmt")
+    def validate_tablefmt(cls, v: str) -> str:
+        """Validate tablefmt."""
+        assert v in tabulate_formats
+        return v
 
 
 class Settings(BaseModel):
