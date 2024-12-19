@@ -1,9 +1,19 @@
 [project]
-name = "docai"
-version = "0.1.0"
-description = "Add your description here"
+name = "DocAI2"
+version = "0.0.1"
+description = "Document AI"
+authors = [{ name = "Adrian Yeung", email = "yeungadrianjy@gmail.com" }]
 readme = "README.md"
-requires-python = ">=3.11"
+keywords = ['python']
+requires-python = ">=3.11,<4.0"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "pydantic>=2.10.0",
     "python-calamine>=0.3.1",
@@ -19,6 +29,18 @@ dev = [
     "pytest>=8.3.3",
     "rich>=13.9.4",
 ]
+
+[project.optional-dependencies]
+mkdocs = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.5.49",
+    "mkdocstrings>=0.27.0",
+]
+
+[project.urls]
+Homepage = "https://yeungadrian.github.io/DocAI/"
+Repository = "https://github.com/yeungadrian/DocAI"
+Documentation = "https://yeungadrian.github.io/DocAI/"
 
 [tool.ruff]
 line-length = 108

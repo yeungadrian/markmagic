@@ -1,0 +1,52 @@
+site_name: DocAI
+repo_url: https://github.com/yeungadrian/DocAI
+site_url: https://yeungadrian.github.io/DocAI
+site_description: Document AI
+site_author: Adrian Yeung
+edit_uri: edit/main/docs/
+repo_name: yeungadrian/DocAI
+copyright: Maintained by <a href="https://yeungadrian.com">yeungadrian</a>.
+
+nav:
+  - Home: index.md
+  - Modules: modules.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [docai]
+theme:
+  name: material
+  feature:
+    tabs: true
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yeungadrian/DocAI
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/DocAI
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
