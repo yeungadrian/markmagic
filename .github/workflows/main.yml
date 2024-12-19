@@ -45,7 +45,6 @@ jobs:
         run: uv run python -m pytest tests
 
 
-
   check-docs:
     runs-on: ubuntu-latest
     steps:

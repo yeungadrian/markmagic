@@ -7,6 +7,5 @@
 Document AI
 
 - **Github repository**: <https://github.com/yeungadrian/DocAI/>
-- **Documentation** <https://yeungadrian.github.io/DocAI/>
 
 Repository initiated with [fpgmaas/cookiecutter-uv](https://github.com/fpgmaas/cookiecutter-uv).
