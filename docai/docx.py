@@ -15,30 +15,12 @@ def _style_separator(paragraph_style: str, separator: str) -> str:
     match paragraph_style:
         case (
             "List"
-            | "List 2"
-            | "List 3"
-            | "List Bullet"
-            | "List Bullet 2"
-            | "List Bullet 3"
-            | "List Continue"
-            | "List Continue 2"
-            | "List Continue 3"
-            | "List Number"
-            | "List Number 2"
-            | "List Number 3"
-            | "List Paragraph"
         ):
             separator = "\n" + "- "
         case "Heading 1" | "Title":
             separator = "\n\n" + "# "
         case "Subheading" | "Heading 2":
             separator = "\n\n" + "## "
-        case "Heading 3":
-            separator = "\n\n" + "### "
-        case "Heading 4":
-            separator = "\n\n" + "#### "
-        case "Heading 5" | "Heading 6" | "Heading 7" | "Heading 8" | "Heading 9":
-            separator = "\n\n" + "##### "
         case _:
             pass
     return separator
