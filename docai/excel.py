@@ -1,5 +1,6 @@
 """Convert excel files to markdown."""
 
+import re
 from typing import IO
 
 from python_calamine import CalamineWorkbook
@@ -8,20 +9,24 @@ from tabulate import tabulate
 from docai.settings import Settings
 
 
-def convert_excel(file: IO[bytes], settings: Settings | None = None) -> list[str]:
+def convert_excel(file: IO[bytes], settings: Settings | None = None) -> str:
     """Partition an excel workbook."""
     if settings is None:
         settings = Settings()
     workbook = CalamineWorkbook.from_object(file)  # type: ignore
-    markdowns: list[str] = []
+    markdown = ""
     for sheet_name in workbook.sheet_names:
         calamine_sheet = workbook.get_sheet_by_name(sheet_name)
         tabular_data = calamine_sheet.to_python(skip_empty_area=settings.excel.skip_empty_area)
-        markdowns.append(
+        tabular_data = [[re.sub(r"\s+", " ", str(j)).strip() for j in i] for i in tabular_data]
+        markdown += f"## Sheet: {sheet_name}\n\n"
+        markdown += (
             tabulate(
                 tabular_data,
                 tablefmt=settings.tables.tablefmt,
                 showindex=settings.tables.showindex,
+                headers="firstrow",
             )
+            + "\n\n"
         )
-    return markdowns
+    return markdown.strip()
