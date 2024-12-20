@@ -21,7 +21,7 @@ dev = [
 ]
 
 [tool.ruff]
-line-length = 120
+line-length = 108
 fix = true
 
 [tool.ruff.format]

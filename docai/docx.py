@@ -54,10 +54,16 @@ def convert_docx(file: IO[bytes], settings: Settings | None = None) -> str:
     document = docx.Document(file)
     for content in document.iter_inner_content():
         if isinstance(content, Table):
+            # TODO: Test nested tables
             # Normalise whitespace characters to not break github tables
-            tabular_data = [[re.sub(r"\s+", " ", cell.text).strip() for cell in row.cells] for row in content.rows]
+            tabular_data = [
+                [re.sub(r"\s+", " ", cell.text).strip() for cell in row.cells] for row in content.rows
+            ]
             markdown += separator + tabulate(
-                tabular_data, tablefmt=settings.tables.tablefmt, showindex=settings.tables.showindex, headers="firstrow"
+                tabular_data,
+                tablefmt=settings.tables.tablefmt,
+                showindex=settings.tables.showindex,
+                headers="firstrow",
             )
         else:  # Inner contents can only be a Table or Paragraph
             style = content.style.name if content.style is not None else None
