@@ -9,7 +9,7 @@ from tabulate import tabulate
 from docai.settings import Settings
 
 
-def convert_excel(file: IO[bytes], settings: Settings | None = None) -> str:
+def convert_excel(file: str | IO[bytes], settings: Settings | None = None) -> str:
     """Partition an excel workbook."""
     if settings is None:
         settings = Settings()

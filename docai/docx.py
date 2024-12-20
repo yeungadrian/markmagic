@@ -44,7 +44,7 @@ def _style_separator(paragraph_style: str, separator: str) -> str:
     return separator
 
 
-def convert_docx(file: IO[bytes], settings: Settings | None = None) -> str:
+def convert_docx(file: str | IO[bytes], settings: Settings | None = None) -> str:
     """Convert docx into documents."""
     if settings is None:
         settings = Settings()
