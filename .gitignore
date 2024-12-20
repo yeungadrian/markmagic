@@ -17,3 +17,6 @@ wheels/
 
 # tox
 .tox/
+
+# coverage
+.coverage
