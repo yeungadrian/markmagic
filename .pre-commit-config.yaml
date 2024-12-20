@@ -6,7 +6,9 @@ repos:
       - id: check-merge-conflict
       - id: check-toml
       - id: end-of-file-fixer
+        exclude: tests/data
       - id: trailing-whitespace
+        exclude: tests/data
 
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.

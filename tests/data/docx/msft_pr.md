@@ -1,5 +1,3 @@
-
-
 Microsoft Cloud Strength Drives Fourth Quarter Results
 
 REDMOND, Wash. — July 25, 2023 — Microsoft Corp. today announced the following results for the quarter ended June 30, 2023, as compared to the corresponding period of last fiscal year:

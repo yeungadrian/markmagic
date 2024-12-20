@@ -10,9 +10,9 @@ from tabulate import tabulate
 from docai.settings import Settings
 
 
-def _style_text(text: str, style: str, separator: str) -> str:
+def _style_separator(paragraph_style: str, separator: str) -> str:
     # TODO: Review formatting rules
-    match style:
+    match paragraph_style:
         case (
             "List"
             | "List 2"
@@ -41,20 +41,19 @@ def _style_text(text: str, style: str, separator: str) -> str:
             separator = "\n\n" + "##### "
         case _:
             pass
-    text = separator + text
-    return text
+    return separator
 
 
 def convert_docx(file: IO[bytes], settings: Settings | None = None) -> str:
     """Convert docx into documents."""
     if settings is None:
         settings = Settings()
-    separator = "\n\n"
     markdown = ""
     document = docx.Document(file)
     for content in document.iter_inner_content():
+        separator = "\n\n"
+        # TODO: Test nested tables
         if isinstance(content, Table):
-            # TODO: Test nested tables
             # Normalise whitespace characters to not break github tables
             tabular_data = [
                 [re.sub(r"\s+", " ", cell.text).strip() for cell in row.cells] for row in content.rows
@@ -66,9 +65,9 @@ def convert_docx(file: IO[bytes], settings: Settings | None = None) -> str:
                 headers="firstrow",
             )
         else:  # Inner contents can only be a Table or Paragraph
-            style = content.style.name if content.style is not None else None
-            if style is not None:
-                markdown += _style_text(content.text.strip(), style, separator)
-            else:
-                markdown += separator + content.text.strip()
+            paragraph_style = content.style.name if content.style is not None else None
+            if paragraph_style is not None:
+                separator = _style_separator(paragraph_style, separator)
+            markdown += separator + content.text.strip()
+    markdown = markdown.strip()
     return markdown
