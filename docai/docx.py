@@ -57,9 +57,7 @@ def convert_docx(file: IO[bytes], settings: Settings | None = None) -> str:
             # Normalise whitespace characters to not break github tables
             tabular_data = [[re.sub(r"\s+", " ", cell.text).strip() for cell in row.cells] for row in content.rows]
             markdown += separator + tabulate(
-                tabular_data,
-                tablefmt=settings.tables.tablefmt,
-                showindex=settings.tables.showindex,
+                tabular_data, tablefmt=settings.tables.tablefmt, showindex=settings.tables.showindex, headers="firstrow"
             )
         else:  # Inner contents can only be a Table or Paragraph
             style = content.style.name if content.style is not None else None
