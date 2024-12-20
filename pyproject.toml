@@ -53,6 +53,20 @@ pycodestyle = { max-doc-length = 108 }
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D"]
 
+[tool.coverage.run]
+source = ['docai']
+branch = true
+relative_files = true
+context = '${CONTEXT}'
+
+[tool.coverage.report]
+precision = 2
+
+[tool.coverage.paths]
+source = [
+    'docai/',
+]
+
 [tool.pyright]
 strict = ["docai"]
 enableExperimentalFeatures = true
