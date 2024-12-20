@@ -13,10 +13,7 @@ from docai.settings import Settings
 def _style_separator(paragraph_style: str, separator: str) -> str:
     # TODO: Review formatting rules
     match paragraph_style:
-        case (
-            "List"
-            | "List Paragraph"
-        ):
+        case "List" | "List Paragraph":
             separator = "\n" + "- "
         case "Heading 1" | "Title":
             separator = "\n\n" + "# "
