@@ -4,7 +4,7 @@ version = "0.0.1"
 description = "Document AI"
 authors = [{ name = "Adrian Yeung", email = "yeungadrianjy@gmail.com" }]
 readme = "README.md"
-keywords = ['python']
+keywords = ["python"]
 requires-python = ">=3.11,<4.0"
 dependencies = [
     "pydantic>=2.10.4",
@@ -30,28 +30,28 @@ docstring-code-format = true
 
 [tool.ruff.lint]
 select = [
-  'F',      # Pyflakes
-  'E',      # pycodestyle (Error)
-  'I',      # isort
-  'D',      # pydocstyle
-  'UP',     # pyupgrade
-  'YTT',    # flake8-2020
-  'B',      # flake8-bugbear
-  'T10',    # flake8-debugger
-  'T20',    # flake8-print
-  'C4',     # flake8-comprehensions
+  "F",      # Pyflakes
+  "E",      # pycodestyle (Error)
+  "I",      # isort
+  "D",      # pydocstyle
+  "UP",     # pyupgrade
+  "YTT",    # flake8-2020
+  "B",      # flake8-bugbear
+  "T10",    # flake8-debugger
+  "T20",    # flake8-print
+  "C4",     # flake8-comprehensions
 ]
 ignore = [
-  "D401",    # non-imperative-mood
-  "D105",    # undocumented-magic-method
-  "D107",    # undocumented-public-init
+  "D401",   # non-imperative-mood
+  "D105",   # undocumented-magic-method
+  "D107",   # undocumented-public-init
 ]
-pydocstyle = { convention = 'numpy' }
-pycodestyle = { max-doc-length = 120 }
+pydocstyle = { convention = "numpy" }
+pycodestyle = { max-doc-length = 108 }
 
 [tool.ruff.lint.per-file-ignores]
-'tests/*' = ['D']
+"tests/*" = ["D"]
 
 [tool.pyright]
-strict = ['docai']
+strict = ["docai"]
 enableExperimentalFeatures = true
