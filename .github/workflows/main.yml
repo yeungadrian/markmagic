@@ -44,8 +44,19 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - run: mkdir coverage
       - name: Run tests
         run: uv run coverage run -m pytest tests
+        env:
+          COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
+          CONTEXT: ${{ runner.os }}-py${{ matrix.python-version }}
+
+      - name: Store coverage files
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.python-version }}
+          path: coverage
+          include-hidden-files: true
 
       - name: Check typing
         run: uv run pyright
