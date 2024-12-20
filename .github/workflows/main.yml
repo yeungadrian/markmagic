@@ -68,9 +68,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: Set up the environment
+        uses: ./.github/actions/setup-python-env
 
       - name: Get coverage files
         uses: actions/download-artifact@v4
@@ -78,8 +77,6 @@ jobs:
           merge-multiple: true
           pattern: coverage-*
           path: coverage
-
-      - run: pip install coverage[toml]
 
       - run: ls -la coverage
       - run: coverage combine coverage
