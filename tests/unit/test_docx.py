@@ -1,16 +1,13 @@
 from io import BytesIO
+from pathlib import Path
 
 from docai.docx import convert_docx
 
 
-def test_convert_docx(msft_pr_docx: tuple[BytesIO, str]) -> None:
-    """
-    Test parse docx function.
-
-    Parameters
-    ----------
-    msft_pr_docx : tuple[BytesIO, str]
-        _description_
-    """
-    documents = convert_docx(msft_pr_docx[0], msft_pr_docx[1])
-    assert len(documents) == 166
+def test_convert_docx() -> None:
+    """Test convert docx function."""
+    filename = "tests/data/docx/msft_pr.docx"
+    markdown = convert_docx(BytesIO(Path(filename).read_bytes()))
+    with Path("tests/data/docx/msft_pr.md").open() as f:
+        expected_results = f.read()
+    assert markdown == expected_results
