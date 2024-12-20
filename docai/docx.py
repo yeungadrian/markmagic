@@ -15,6 +15,7 @@ def _style_separator(paragraph_style: str, separator: str) -> str:
     match paragraph_style:
         case (
             "List"
+            | "List Paragraph"
         ):
             separator = "\n" + "- "
         case "Heading 1" | "Title":
