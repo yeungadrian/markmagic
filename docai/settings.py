@@ -7,7 +7,7 @@ from tabulate import tabulate_formats
 class TableSettings(BaseModel):
     """Table format settings."""
 
-    tablefmt: str = "github"
+    tablefmt: str = "github" # Type checkers do not support unpacking into a Literal
     showindex: bool = False
 
     @field_validator("tablefmt")
