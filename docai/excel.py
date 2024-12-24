@@ -10,7 +10,7 @@ from docai.settings import Settings
 
 
 def convert_excel(file: str | IO[bytes], settings: Settings | None = None) -> str:
-    """Partition an excel workbook."""
+    """Convert excel into markdown."""
     if settings is None:
         settings = Settings()
     workbook = CalamineWorkbook.from_object(file)  # type: ignore
