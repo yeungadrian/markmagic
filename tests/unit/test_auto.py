@@ -28,3 +28,10 @@ def test_convert_auto_pdf() -> None:
     with Path("tests/data/pdf/msft_ar.md").open() as f:
         expected_results = f.read()
     assert markdown == expected_results
+
+
+def test_convert_auto_zip() -> None:
+    """Test convert auto function for zip."""
+    filename = "tests/data/unknown/msft_pr.zip"
+    ext, markdown = convert_auto(filename, Path(filename).read_bytes())
+    assert ext == "unknown"
