@@ -30,6 +30,15 @@ def test_convert_auto_pdf() -> None:
     assert markdown == expected_results
 
 
+def test_convert_auto_eml() -> None:
+    """Test convert auto function for pdf."""
+    filename = "tests/data/eml/example.eml"
+    ext, markdown = convert_auto(filename, Path(filename).read_bytes())
+    with Path("tests/data/eml/example.md").open() as f:
+        expected_results = f.read()
+    assert markdown == expected_results
+
+
 def test_convert_auto_zip() -> None:
     """Test convert auto function for zip."""
     filename = "tests/data/unknown/msft_pr.zip"
