@@ -4,7 +4,7 @@ from typing import IO
 
 from pypdf import PdfReader
 
-from docai.settings import Settings
+from markmagic.settings import Settings
 
 
 def convert_pdf(file: str | IO[bytes], settings: Settings | None = None):

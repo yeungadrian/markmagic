@@ -4,7 +4,7 @@ from io import BytesIO
 
 import puremagic
 
-from docai import convert_docx, convert_eml, convert_excel, convert_pdf
+from markmagic import convert_docx, convert_eml, convert_excel, convert_pdf
 
 
 def convert_auto(filename: str, content: bytes) -> tuple[str, str]:

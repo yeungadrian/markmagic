@@ -18,13 +18,13 @@ class TableSettings(BaseModel):
 
 
 class ExcelSettings(BaseModel):
-    """Excel settings."""
+    """Excel format settings."""
 
     skip_empty_area: bool = False
 
 
 class Settings(BaseModel):
-    """DocAI Settings."""
+    """Markdown conversion settings."""
 
     tables: TableSettings = TableSettings()
     excel: ExcelSettings = ExcelSettings()

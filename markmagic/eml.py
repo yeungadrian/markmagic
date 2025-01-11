@@ -8,7 +8,7 @@ from typing import IO, cast
 from markdownify import markdownify
 from pydantic import BaseModel
 
-from docai.settings import Settings
+from markmagic.settings import Settings
 
 
 class Attachment(BaseModel):

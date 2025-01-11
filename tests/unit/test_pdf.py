@@ -1,7 +1,7 @@
 from io import BytesIO
 from pathlib import Path
 
-from docai.pdf import convert_pdf
+from markmagic.pdf import convert_pdf
 
 
 def test_convert_pdf() -> None:

@@ -1,7 +1,7 @@
 [project]
-name = "DocAI"
+name = "markmagic"
 version = "0.0.1"
-description = "Document AI"
+description = "Convert documents to markdown"
 authors = [{ name = "Adrian Yeung", email = "yeungadrianjy@gmail.com" }]
 readme = "README.md"
 keywords = ["python"]
@@ -57,7 +57,7 @@ pycodestyle = { max-doc-length = 108 }
 "tests/*" = ["D"]
 
 [tool.coverage.run]
-source = ['docai']
+source = ['markmagic']
 branch = true
 relative_files = true
 context = '${CONTEXT}'
@@ -67,9 +67,9 @@ precision = 2
 
 [tool.coverage.paths]
 source = [
-    'docai/',
+    'markmagic/',
 ]
 
 [tool.pyright]
-strict = ["docai"]
+strict = ["markmagic"]
 enableExperimentalFeatures = true
