@@ -81,7 +81,7 @@ jobs:
       - run: ls -la coverage
       - run: uv run coverage combine coverage
       - run: uv run coverage report
-      - run: uv run coverage html --show-contexts --title "docai coverage for ${{ github.sha }}"
+      - run: uv run coverage html --show-contexts --title "markmagic coverage for ${{ github.sha }}"
 
       - name: Store coverage data
         uses: actions/upload-artifact@v4
