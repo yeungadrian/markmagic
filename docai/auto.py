@@ -9,7 +9,7 @@ from docai import convert_docx, convert_eml, convert_excel, convert_pdf
 
 def convert_auto(filename: str, content: bytes) -> tuple[str, str]:
     """Convert any file."""
-    ext = puremagic.ext_from_filename(filename)  # type: ignore
+    ext = puremagic.ext_from_filename(filename)
     _content = BytesIO(content)
     markdown = ""
     match ext:

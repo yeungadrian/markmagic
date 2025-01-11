@@ -1,0 +1,3 @@
+from pathlib import Path
+
+def ext_from_filename(filename: Path | str) -> str: ...
