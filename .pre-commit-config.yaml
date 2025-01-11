@@ -11,12 +11,12 @@ repos:
         exclude: tests/data
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.5.11
+    rev: 0.5.18
     hooks:
       - id: uv-lock
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.4
+    rev: v0.9.1
     hooks:
       - id: ruff
         args: [ --fix ]
