@@ -55,5 +55,8 @@ def convert_eml(file: str | IO[bytes], settings: Settings | None = None) -> tupl
     message = cast(EmailMessage, email.message_from_binary_file(file, policy=email.policy.default))  # type: ignore
     # TODO: Add subject, to, from
     body_content = _extract_body(message)
-    attachments = _extract_attachments(message)
+    if settings.email.process_attachments:
+        attachments = _extract_attachments(message)
+    else:
+        attachments = []
     return body_content, attachments
