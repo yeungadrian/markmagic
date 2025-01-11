@@ -7,7 +7,7 @@ import docx
 from docx.table import Table
 from tabulate import tabulate
 
-from docai.settings import Settings
+from markmagic.settings import Settings
 
 
 def _style_separator(paragraph_style: str, separator: str) -> str:

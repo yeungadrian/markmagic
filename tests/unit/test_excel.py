@@ -1,7 +1,7 @@
 from io import BytesIO
 from pathlib import Path
 
-from docai.excel import convert_excel
+from markmagic.excel import convert_excel
 
 
 def test_convert_excel() -> None:

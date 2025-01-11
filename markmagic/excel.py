@@ -6,7 +6,7 @@ from typing import IO
 from python_calamine import CalamineWorkbook
 from tabulate import tabulate
 
-from docai.settings import Settings
+from markmagic.settings import Settings
 
 
 def convert_excel(file: str | IO[bytes], settings: Settings | None = None) -> str:

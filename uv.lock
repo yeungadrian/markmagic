@@ -121,49 +121,6 @@ wheels = [
 ]
 
 [[package]]
-name = "docai"
-version = "0.0.1"
-source = { virtual = "." }
-dependencies = [
-    { name = "markdownify" },
-    { name = "puremagic" },
-    { name = "pydantic" },
-    { name = "pypdf" },
-    { name = "python-calamine" },
-    { name = "python-docx" },
-    { name = "tabulate" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "coverage", extra = ["toml"] },
-    { name = "pre-commit" },
-    { name = "pyright" },
-    { name = "pytest" },
-    { name = "tox-uv" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "markdownify", specifier = ">=0.14.1" },
-    { name = "puremagic", specifier = ">=1.28" },
-    { name = "pydantic", specifier = ">=2.10.4" },
-    { name = "pypdf", specifier = ">=5.1.0" },
-    { name = "python-calamine", specifier = ">=0.3.1" },
-    { name = "python-docx", specifier = ">=1.1.2" },
-    { name = "tabulate", specifier = ">=0.9.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "coverage", extras = ["toml"], specifier = ">=7.6.9" },
-    { name = "pre-commit", specifier = ">=4.0.1" },
-    { name = "pyright", specifier = ">=1.1.391" },
-    { name = "pytest", specifier = ">=8.3.4" },
-    { name = "tox-uv", specifier = ">=1.11.3" },
-]
-
-[[package]]
 name = "filelock"
 version = "3.16.1"
 source = { registry = "https://pypi.org/simple" }
@@ -260,6 +217,49 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/1b/75/483a4bcca436fe88d02dc7686c372631d833848951b368700bdc0c770bb7/markdownify-0.14.1.tar.gz", hash = "sha256:a62a7a216947ed0b8dafb95b99b2ef4a0edd1e18d5653c656f68f03db2bfb2f1", size = 14332 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/65/0b/74cec93a7b05edf4fc3ea1c899fe8a37f041d7b9d303c75abf7a162924e0/markdownify-0.14.1-py3-none-any.whl", hash = "sha256:4c46a6c0c12c6005ddcd49b45a5a890398b002ef51380cd319db62df5e09bc2a", size = 11530 },
+]
+
+[[package]]
+name = "markmagic"
+version = "0.0.1"
+source = { virtual = "." }
+dependencies = [
+    { name = "markdownify" },
+    { name = "puremagic" },
+    { name = "pydantic" },
+    { name = "pypdf" },
+    { name = "python-calamine" },
+    { name = "python-docx" },
+    { name = "tabulate" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "coverage", extra = ["toml"] },
+    { name = "pre-commit" },
+    { name = "pyright" },
+    { name = "pytest" },
+    { name = "tox-uv" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "markdownify", specifier = ">=0.14.1" },
+    { name = "puremagic", specifier = ">=1.28" },
+    { name = "pydantic", specifier = ">=2.10.4" },
+    { name = "pypdf", specifier = ">=5.1.0" },
+    { name = "python-calamine", specifier = ">=0.3.1" },
+    { name = "python-docx", specifier = ">=1.1.2" },
+    { name = "tabulate", specifier = ">=0.9.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "coverage", extras = ["toml"], specifier = ">=7.6.9" },
+    { name = "pre-commit", specifier = ">=4.0.1" },
+    { name = "pyright", specifier = ">=1.1.391" },
+    { name = "pytest", specifier = ">=8.3.4" },
+    { name = "tox-uv", specifier = ">=1.11.3" },
 ]
 
 [[package]]

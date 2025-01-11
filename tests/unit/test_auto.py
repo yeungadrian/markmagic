@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from docai.auto import convert_auto
+from markmagic.auto import convert_auto
 
 
 def test_convert_auto_docx() -> None:

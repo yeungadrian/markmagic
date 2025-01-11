@@ -1,7 +1,7 @@
 from io import BytesIO
 from pathlib import Path
 
-from docai.docx import convert_docx
+from markmagic.docx import convert_docx
 
 
 def test_convert_docx() -> None:
