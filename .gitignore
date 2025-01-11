@@ -6,12 +6,6 @@ dist/
 wheels/
 *.egg-info
 
-# venv
-.venv
-
-# .env
-.env
-
 # macos
 .DS_Store
 
