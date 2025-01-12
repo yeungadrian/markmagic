@@ -2,7 +2,7 @@
 
 from io import BytesIO
 from pathlib import Path
-from typing import Literal
+from typing import IO
 
 from markmagic.docx import convert_docx
 from markmagic.eml import convert_eml
@@ -13,34 +13,52 @@ from markmagic.settings import Settings
 
 def convert_any(
     filename: str,
-    content: bytes,
-    ext: Literal[".xlsx", ".docx", ".pdf", ".eml", ""] = "",
+    file: IO[bytes],
+    ext: str = "",
     settings: Settings | None = None,
-) -> tuple[str | None, str]:
-    """Convert any file."""
+) -> tuple[str, str]:
+    """Automatically convert any file into markdown.
+
+    Parameters
+    ----------
+    filename : str
+    file : IO[bytes]
+        file as buffer, e.g.
+        - pass f when using with Path(...).open("rb") as f:
+        - or create buffer by wrapping bytes in BytesIO
+
+    ext : str, optional
+        extension of file, by default "" to automatically detect
+    settings : Settings | None, optional
+        conversion settings to apply, by default None
+
+    Returns
+    -------
+    tuple[str, str]
+        extension, markdown of file
+    """
     if settings is None:
         settings = Settings()
     if ext == "":
-        guess = Path(filename).suffix.lower()
+        _ext = Path(filename).suffix.lower()
     else:
-        guess = ext
-    _content = BytesIO(content)
+        _ext = ext
     markdown = ""
-    match guess:
+    match _ext:
         case ".xlsx":
-            markdown = convert_excel(_content, settings)
+            markdown = convert_excel(file, settings)
         case ".docx":
-            markdown = convert_docx(_content, settings)
+            markdown = convert_docx(file, settings)
         case ".pdf":
-            markdown = convert_pdf(_content, settings)
+            markdown = convert_pdf(file, settings)
         case ".eml":
-            _markdown, attachments = convert_eml(_content, settings)
+            _markdown, attachments = convert_eml(file, settings)
             markdown += _markdown
             for attachment in attachments:
                 markdown += f"\n\n## Filename: {attachment.filename}\n\n"
-                _, _markdown = convert_any(attachment.filename, attachment.content, "", settings)
+                _, _markdown = convert_any(attachment.filename, BytesIO(attachment.content), "", settings)
                 markdown += _markdown
         case _:
-            guess = ""
+            _ext = ""
             markdown = ""
-    return guess, markdown
+    return _ext, markdown
