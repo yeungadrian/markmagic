@@ -1,9 +1,8 @@
 """Detect file type and convert."""
 
 from io import BytesIO
+from pathlib import Path
 from typing import Literal
-
-import puremagic
 
 from markmagic.docx import convert_docx
 from markmagic.eml import convert_eml
@@ -22,7 +21,7 @@ def convert_any(
     if settings is None:
         settings = Settings()
     if ext == "":
-        guess = puremagic.ext_from_filename(filename)
+        guess = Path(filename).suffix.lower()
     else:
         guess = ext
     _content = BytesIO(content)
