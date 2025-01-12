@@ -1,6 +1,6 @@
 # markmagic
 
-markmagic converts files into markdown format
+convert files into markdown
 
 Supported file types (and processing engine):
 - docx ([python-docx](https://python-docx.readthedocs.io/en/latest/))
