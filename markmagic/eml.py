@@ -50,7 +50,7 @@ def _extract_attachments(message: EmailMessage):
     return attachments
 
 
-def convert_eml(file: str | IO[bytes], settings: Settings) -> tuple[str, list[Attachment]]:
+def convert_eml(file: IO[bytes], settings: Settings) -> tuple[str, list[Attachment]]:
     """Convert eml to markdown."""
     message = cast(EmailMessage, email.message_from_binary_file(file, policy=email.policy.default))  # type: ignore
     # TODO: Add subject, to, from
