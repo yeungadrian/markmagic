@@ -1,6 +1,6 @@
 [project]
 name = "markmagic"
-version = "0.0.1"
+version = "0.1.0"
 description = "Convert documents to markdown"
 authors = [{ name = "Adrian Yeung", email = "yeungadrianjy@gmail.com" }]
 readme = "README.md"
