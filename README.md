@@ -25,3 +25,7 @@ with Path("tests/data/docx/msft_pr.docx").open("rb") as f:
 ## Goals / Motivation
 - Most consistent way of sending data to llms is in markdown
 - Understand python tooling landscape and what a set of good lightweight options look like
+
+## TODOs:
+- Understand package build & release process
+- Create release notes (likely copying pydantics setup)
