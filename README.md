@@ -13,7 +13,8 @@ Supported file types (and processing engine):
 from pathlib import Path
 from markmagic import convert_any
 
-convert_any(filename= "msft_pr.docx", content=Path("tests/data/docx/msft_pr.docx").read_bytes())
+with Path("tests/data/docx/msft_pr.docx").open("rb") as f:
+    convert_any(filename= "msft_pr.docx", content=f)
 ```
 
 ## Design / Limitations
