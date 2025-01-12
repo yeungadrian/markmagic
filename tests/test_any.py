@@ -34,7 +34,7 @@ def test_convert_any_pdf() -> None:
     assert markdown == expected_results
 
 
-def test_convert_any_eml() -> None:
+def test_convert_any_html_eml() -> None:
     """Test convert any function for email."""
     filename = "tests/data/eml/html_w_att.eml"
     ext, markdown = convert_any(filename, Path(filename).read_bytes())
@@ -44,11 +44,21 @@ def test_convert_any_eml() -> None:
     assert markdown == expected_results
 
 
-def test_convert_any_eml_skip_attachment() -> None:
+def test_convert_any_plain_eml() -> None:
+    """Test convert any function for email."""
+    filename = "tests/data/eml/plain.eml"
+    ext, markdown = convert_any(filename, Path(filename).read_bytes())
+    with Path("tests/data/eml/plain.md").open() as f:
+        expected_results = f.read()
+    assert ext == ".eml"
+    assert markdown == expected_results
+
+
+def test_convert_any_html_eml_skip_attachment() -> None:
     """Test convert any function for email, but skip attachments."""
     settings = Settings(email=EmailSettings(process_attachments=False))
     filename = "tests/data/eml/html_w_att.eml"
-    ext, markdown = convert_any(filename, Path(filename).read_bytes(), settings=settings)
+    ext, markdown = convert_any(filename, Path(filename).read_bytes(), ".eml", settings=settings)
     with Path("tests/data/eml/html_wo_att.md").open() as f:
         expected_results = f.read()
     assert ext == ".eml"

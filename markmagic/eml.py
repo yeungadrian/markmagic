@@ -19,6 +19,7 @@ class Attachment(BaseModel):
 
 
 def _extract_body(message: EmailMessage) -> str:
+    """Extract main email body."""
     body = message.get_body()
     if body is None:
         body_content = ""
@@ -33,6 +34,7 @@ def _extract_body(message: EmailMessage) -> str:
 
 
 def _extract_attachments(message: EmailMessage):
+    """Extract all valid attachments."""
     attachments: list[Attachment] = []
     for i in message.iter_attachments():
         filename = i.get_filename()
