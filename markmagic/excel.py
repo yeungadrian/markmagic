@@ -9,10 +9,8 @@ from tabulate import tabulate
 from markmagic.settings import Settings
 
 
-def convert_excel(file: str | IO[bytes], settings: Settings | None = None) -> str:
+def convert_excel(file: str | IO[bytes], settings: Settings) -> str:
     """Convert excel into markdown."""
-    if settings is None:
-        settings = Settings()
     workbook = CalamineWorkbook.from_object(file)  # type: ignore
     markdown = ""
     for sheet_name in workbook.sheet_names:

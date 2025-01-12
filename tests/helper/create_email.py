@@ -13,6 +13,7 @@ def send_email_with_attachment(sender_email, receiver_email, subject, body, atta
 
     # Attach the body text
     msg.attach(MIMEText(body, "html"))
+    msg.attach(MIMEText("Example of plain text that follows.", "plain"))
 
     # Open the file in bynary
     with open(attachment_path, "rb") as attachment:
@@ -28,7 +29,7 @@ def send_email_with_attachment(sender_email, receiver_email, subject, body, atta
     part.add_header("Content-Disposition", f"attachment; filename= {filename}")
 
     # Attach the attachment to the message
-    msg.attach(part)
+    # msg.attach(part)
 
     # Convert the message to a string
     return msg.as_bytes()

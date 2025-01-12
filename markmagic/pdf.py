@@ -7,10 +7,8 @@ from pypdf import PdfReader
 from markmagic.settings import Settings
 
 
-def convert_pdf(file: str | IO[bytes], settings: Settings | None = None) -> str:
+def convert_pdf(file: str | IO[bytes], settings: Settings) -> str:
     """Convert pdf to markdown."""
-    if settings is None:
-        settings = Settings()
     reader = PdfReader(file)
     markdown = ""
     for page in reader.pages:
