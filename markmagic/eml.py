@@ -29,7 +29,7 @@ def _extract_body(message: EmailMessage) -> str:
             body_content = markdownify(body.get_content())
         elif content_type == "text/plain":
             body_content = body.get_content()
-    return body_content
+    return body_content.strip()
 
 
 def _extract_attachments(message: EmailMessage):
@@ -48,10 +48,8 @@ def _extract_attachments(message: EmailMessage):
     return attachments
 
 
-def convert_eml(file: str | IO[bytes], settings: Settings | None = None) -> tuple[str, list[Attachment]]:
+def convert_eml(file: str | IO[bytes], settings: Settings) -> tuple[str, list[Attachment]]:
     """Convert eml to markdown."""
-    if settings is None:
-        settings = Settings()
     message = cast(EmailMessage, email.message_from_binary_file(file, policy=email.policy.default))  # type: ignore
     # TODO: Add subject, to, from
     body_content = _extract_body(message)

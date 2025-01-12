@@ -24,10 +24,8 @@ def _style_separator(paragraph_style: str, separator: str) -> str:
     return separator
 
 
-def convert_docx(file: str | IO[bytes], settings: Settings | None = None) -> str:
+def convert_docx(file: str | IO[bytes], settings: Settings) -> str:
     """Convert docx into markdown."""
-    if settings is None:
-        settings = Settings()
     markdown = ""
     document = docx.Document(file)
     for content in document.iter_inner_content():
@@ -44,7 +42,7 @@ def convert_docx(file: str | IO[bytes], settings: Settings | None = None) -> str
                 showindex=settings.tables.showindex,
                 headers="firstrow",
             )
-        else:  # Inner contents can only be a Table or Paragraph
+        else:
             paragraph_style = content.style.name if content.style is not None else None
             if paragraph_style is not None:
                 separator = _style_separator(paragraph_style, separator)

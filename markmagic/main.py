@@ -1,21 +1,33 @@
 """Detect file type and convert."""
 
 from io import BytesIO
+from typing import Literal
 
 import puremagic
 
-from markmagic import convert_docx, convert_eml, convert_excel, convert_pdf
+from markmagic.docx import convert_docx
+from markmagic.eml import convert_eml
+from markmagic.excel import convert_excel
+from markmagic.pdf import convert_pdf
 from markmagic.settings import Settings
 
 
-def convert_auto(filename: str, content: bytes, settings: Settings | None = None) -> tuple[str, str]:
+def convert_any(
+    filename: str,
+    content: bytes,
+    ext: Literal[".xlsx", ".docx", ".pdf", ".eml", ""] = "",
+    settings: Settings | None = None,
+) -> tuple[str | None, str]:
     """Convert any file."""
     if settings is None:
         settings = Settings()
-    ext = puremagic.ext_from_filename(filename)
+    if ext == "":
+        guess = puremagic.ext_from_filename(filename)
+    else:
+        guess = ext
     _content = BytesIO(content)
     markdown = ""
-    match ext:
+    match guess:
         case ".xlsx":
             markdown = convert_excel(_content, settings)
         case ".docx":
@@ -27,9 +39,9 @@ def convert_auto(filename: str, content: bytes, settings: Settings | None = None
             markdown += _markdown
             for attachment in attachments:
                 markdown += f"\n\n## Filename: {attachment.filename}\n\n"
-                _, _markdown = convert_auto(attachment.filename, attachment.content, settings)
+                _, _markdown = convert_any(attachment.filename, attachment.content, "", settings)
                 markdown += _markdown
         case _:
-            ext = "unknown"
+            guess = ""
             markdown = ""
-    return ext, markdown
+    return guess, markdown

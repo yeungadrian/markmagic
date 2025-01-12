@@ -1,0 +1,13 @@
+Content-Type: multipart/mixed; boundary="===============1475070014686187255=="
+MIME-Version: 1.0
+From: your_email@gmail.com
+To: recipient_email@example.com
+Subject: Plain text email
+    
+--===============1475070014686187255==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Example of plain text that follows.
+--===============1475070014686187255==--

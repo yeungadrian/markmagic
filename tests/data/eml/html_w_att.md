@@ -1,5 +1,3 @@
-
-
 Hello!
 ======
 
@@ -14,11 +12,6 @@ Mock Replies
 
 
 **Reply 2:** I have reviewed the attachment and everything looks good. Let me know if you need anything else.
-
-
-
-
-
 
 ## Filename: msft_pr.docx
 
