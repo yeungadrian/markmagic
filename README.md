@@ -1,6 +1,6 @@
 # markmagic
 
-markmagic converts files into markdown format
+convert files into markdown
 
 Supported file types (and processing engine):
 - docx ([python-docx](https://python-docx.readthedocs.io/en/latest/))
@@ -13,7 +13,8 @@ Supported file types (and processing engine):
 from pathlib import Path
 from markmagic import convert_any
 
-convert_any(filename= "msft_pr.docx", content=Path("tests/data/docx/msft_pr.docx").read_bytes())
+with Path("tests/data/docx/msft_pr.docx").open("rb") as f:
+    convert_any(filename= "msft_pr.docx", content=f)
 ```
 
 ## Design / Limitations
@@ -24,3 +25,7 @@ convert_any(filename= "msft_pr.docx", content=Path("tests/data/docx/msft_pr.docx
 ## Goals / Motivation
 - Most consistent way of sending data to llms is in markdown
 - Understand python tooling landscape and what a set of good lightweight options look like
+
+## TODOs:
+- Understand package build & release process
+- Create release notes (likely copying pydantics setup)
