@@ -38,8 +38,8 @@ def convert_docx(file: str | IO[bytes], settings: Settings) -> str:
             ]
             markdown += separator + tabulate(
                 tabular_data,
-                tablefmt=settings.tables.tablefmt,
-                showindex=settings.tables.showindex,
+                tablefmt=settings.tablefmt,
+                showindex=settings.showindex,
                 headers="firstrow",
             )
         else:

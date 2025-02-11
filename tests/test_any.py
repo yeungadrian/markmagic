@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from markmagic import convert_any
-from markmagic.settings import EmailSettings, Settings
+from markmagic.settings import Settings
 
 
 def test_convert_any_docx() -> None:
@@ -61,7 +61,7 @@ def test_convert_any_plain_eml() -> None:
 
 def test_convert_any_html_eml_skip_attachment() -> None:
     """Test convert any function for email, but skip attachments."""
-    settings = Settings(email=EmailSettings(process_attachments=False))
+    settings = Settings(process_attachments=False)
     filename = "tests/data/eml/html_w_att.eml"
     with Path(filename).open("rb") as f:
         ext, markdown = convert_any(filename, f, ".eml", settings=settings)
