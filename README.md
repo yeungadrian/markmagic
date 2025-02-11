@@ -25,6 +25,8 @@ with Path("tests/data/docx/msft_pr.docx").open("rb") as f:
 ## Goals / Motivation
 - Most consistent way of sending data to llms is in markdown
 - Understand python tooling landscape and what a set of good lightweight options look like
+- OCR is just neural nets so why not just use vision language models for ocr?
+- OCRBenchmark https://github.com/open-compass/VLMEvalKit?tab=readme-ov-file
 
 ## TODOs:
-- Create release notes (likely copying pydantics setup)
+- TBD
