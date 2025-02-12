@@ -1,7 +1,9 @@
 from pathlib import Path
 
+import pytest
+
 from markmagic import convert_any
-from markmagic.settings import EmailSettings, Settings
+from markmagic.settings import Settings
 
 
 def test_convert_any_docx() -> None:
@@ -37,6 +39,21 @@ def test_convert_any_pdf() -> None:
     assert markdown == expected_results
 
 
+@pytest.mark.vcr()
+def test_convert_any_pdf_vlm() -> None:
+    """Test convert any function for pdf."""
+    settings = Settings(use_vlm=True)
+    filename = "tests/data/pdf/form10k.pdf"
+    with Path(filename).open("rb") as f:
+        ext, markdown = convert_any(filename, f, settings=settings)
+    with Path("tests/data/pdf/form10k.md").open("w") as f:
+        f.write(markdown)
+    with Path("tests/data/pdf/form10k.md").open() as f:
+        expected_results = f.read()
+    assert ext == ".pdf"
+    assert markdown == expected_results
+
+
 def test_convert_any_html_eml() -> None:
     """Test convert any function for email."""
     filename = "tests/data/eml/html_w_att.eml"
@@ -61,7 +78,7 @@ def test_convert_any_plain_eml() -> None:
 
 def test_convert_any_html_eml_skip_attachment() -> None:
     """Test convert any function for email, but skip attachments."""
-    settings = Settings(email=EmailSettings(process_attachments=False))
+    settings = Settings(process_attachments=False)
     filename = "tests/data/eml/html_w_att.eml"
     with Path(filename).open("rb") as f:
         ext, markdown = convert_any(filename, f, ".eml", settings=settings)

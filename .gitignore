@@ -11,3 +11,6 @@ dist/
 
 # coverage
 .coverage
+
+# Environment var file
+.env

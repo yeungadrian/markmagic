@@ -7,7 +7,7 @@ from typing import IO
 from markmagic.docx import convert_docx
 from markmagic.eml import convert_eml
 from markmagic.excel import convert_excel
-from markmagic.pdf import convert_pdf
+from markmagic.pdf import convert_pdf, convert_pdf_with_vlm
 from markmagic.settings import Settings
 
 
@@ -50,7 +50,10 @@ def convert_any(
         case ".docx":
             markdown = convert_docx(file, settings)
         case ".pdf":
-            markdown = convert_pdf(file, settings)
+            if settings.use_vlm:
+                markdown = convert_pdf_with_vlm(file, settings)
+            else:
+                markdown = convert_pdf(file, settings)
         case ".eml":
             _markdown, attachments = convert_eml(file, settings)
             markdown += _markdown
