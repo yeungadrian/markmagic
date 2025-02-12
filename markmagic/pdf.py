@@ -68,7 +68,7 @@ def _ocr_with_vlm(client: OpenAI, base64_image: str, settings: Settings) -> str:
 def convert_pdf_with_vlm(file: str | IO[bytes], settings: Settings) -> str:
     """Convert pdf to markdown using vision language model."""
     markdown = ""
-    pdf = pdfium.PdfDocument(file.read())  # type: ignore
+    pdf = pdfium.PdfDocument(file)
     n_pages = len(pdf)
 
     if settings.api_key is None:
@@ -84,5 +84,5 @@ def convert_pdf_with_vlm(file: str | IO[bytes], settings: Settings) -> str:
     for i in range(n_pages):
         page = pdf.get_page(i)
         base64_image = _convert_pdf_to_base64(page)
-        markdown += _ocr_with_vlm(client, base64_image, settings)
-    return markdown
+        markdown += _ocr_with_vlm(client, base64_image, settings) + "\n\n"
+    return markdown.strip()

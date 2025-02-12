@@ -1,7 +1,7 @@
 """Stub file for pyright."""
 
 from pathlib import Path
-from typing import Any
+from typing import IO, Any
 
 from pypdfium2._helpers.bitmap import PdfBitmap
 
@@ -19,6 +19,6 @@ class PdfPage:
     ) -> PdfBitmap: ...
 
 class PdfDocument:
-    def __init__(self, input_data: str | Path | bytes): ...
+    def __init__(self, input_data: str | Path | bytes | IO[bytes]): ...
     def __len__(self) -> int: ...
     def get_page(self, index: int) -> PdfPage: ...
