@@ -56,8 +56,7 @@ def _ocr_with_vlm(client: OpenAI, base64_image: str, settings: Settings) -> str:
                 ],
             },
         ],
-        stop=settings.stop,
-        temperature=0.0,
+        temperature=settings.temperature,
     )
     if response.choices[0].message.content is None:
         return ""

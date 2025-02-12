@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from markmagic import convert_any
 from markmagic.settings import Settings
 
@@ -32,6 +34,21 @@ def test_convert_any_pdf() -> None:
     with Path(filename).open("rb") as f:
         ext, markdown = convert_any(filename, f)
     with Path("tests/data/pdf/msft_ar.md").open() as f:
+        expected_results = f.read()
+    assert ext == ".pdf"
+    assert markdown == expected_results
+
+
+@pytest.mark.vcr()
+def test_convert_any_pdf_vlm() -> None:
+    """Test convert any function for pdf."""
+    settings = Settings(use_vlm=True)
+    filename = "tests/data/pdf/form10k.pdf"
+    with Path(filename).open("rb") as f:
+        ext, markdown = convert_any(filename, f, settings=settings)
+    with Path("tests/data/pdf/form10k.md").open("w") as f:
+        f.write(markdown)
+    with Path("tests/data/pdf/form10k.md").open() as f:
         expected_results = f.read()
     assert ext == ".pdf"
     assert markdown == expected_results

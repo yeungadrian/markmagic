@@ -29,6 +29,7 @@ dev = [
     "pre-commit>=4.0.1",
     "pyright>=1.1.391",
     "pytest>=8.3.4",
+    "pytest-recording>=0.13.2",
     "tox-uv>=1.17.0",
 ]
 
