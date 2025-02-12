@@ -1,0 +1,17 @@
+changelog:
+  exclude:
+    labels:
+      - documentation
+  categories:
+    - title: New Features
+      labels:
+        - enhancement
+    - title: Changes
+      labels:
+        - change
+    - title: Performance
+      labels:
+        - performance
+    - title: Fixes
+      labels:
+        - bug
