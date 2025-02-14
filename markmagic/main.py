@@ -16,7 +16,7 @@ def convert_any(
     file: IO[bytes],
     ext: str = "",
     settings: Settings | None = None,
-) -> tuple[str, str]:
+) -> str:
     """Automatically convert any file into markdown.
 
     Parameters
@@ -40,11 +40,9 @@ def convert_any(
     if settings is None:
         settings = Settings()
     if ext == "":
-        _ext = Path(filename).suffix.lower()
-    else:
-        _ext = ext
+        ext = Path(filename).suffix.lower()
     markdown = ""
-    match _ext:
+    match ext:
         case ".xlsx":
             markdown = convert_excel(file, settings)
         case ".docx":
@@ -59,9 +57,7 @@ def convert_any(
             markdown += _markdown
             for attachment in attachments:
                 markdown += f"\n\n## Filename: {attachment.filename}\n\n"
-                _, _markdown = convert_any(attachment.filename, BytesIO(attachment.content), "", settings)
-                markdown += _markdown
+                markdown += convert_any(attachment.filename, BytesIO(attachment.content), "", settings)
         case _:
-            _ext = ""
             markdown = ""
-    return _ext, markdown
+    return markdown
