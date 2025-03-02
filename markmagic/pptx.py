@@ -44,10 +44,13 @@ def _convert_table(graphfrm: GraphicFrame, settings: Settings) -> str:
     tabular_data = [
         [re.sub(r"\s+", " ", cell.text).strip() for cell in row.cells] for row in graphfrm.table.rows
     ]
-    markdown = tabulate(
-        tabular_data,
-        tablefmt=settings.tablefmt,
-        showindex=settings.showindex,
-        headers="firstrow",
-    ) + "\n\n"
+    markdown = (
+        tabulate(
+            tabular_data,
+            tablefmt=settings.tablefmt,
+            showindex=settings.showindex,
+            headers="firstrow",
+        )
+        + "\n\n"
+    )
     return markdown
