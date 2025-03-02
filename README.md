@@ -4,9 +4,11 @@ convert files into markdown
 
 Supported file types (and processing engine):
 - docx ([python-docx](https://python-docx.readthedocs.io/en/latest/))
+- eml ([email](https://docs.python.org/3/library/email.html))
 - excel ([python-calamine](https://pypi.org/project/python-calamine/))
 - pdf ([pypdf](https://pypdf.readthedocs.io/en/stable/index.html) / vision-language-models)
-- eml ([email](https://docs.python.org/3/library/email.html))
+- pptx ([python-pptx](https://python-pptx.readthedocs.io/en/latest/index.html))
+
 
 ## Getting started
 ```py
