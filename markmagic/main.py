@@ -8,6 +8,7 @@ from markmagic.docx import convert_docx
 from markmagic.eml import convert_eml
 from markmagic.excel import convert_excel
 from markmagic.pdf import convert_pdf, convert_pdf_with_vlm
+from markmagic.pptx import convert_pptx
 from markmagic.settings import Settings
 
 
@@ -43,21 +44,23 @@ def convert_any(
         ext = Path(filename).suffix.lower()
     markdown = ""
     match ext:
-        case ".xlsx":
-            markdown = convert_excel(file, settings)
         case ".docx":
             markdown = convert_docx(file, settings)
-        case ".pdf":
-            if settings.use_vlm:
-                markdown = convert_pdf_with_vlm(file, settings)
-            else:
-                markdown = convert_pdf(file, settings)
         case ".eml":
             _markdown, attachments = convert_eml(file, settings)
             markdown += _markdown
             for attachment in attachments:
                 markdown += f"\n\n## Filename: {attachment.filename}\n\n"
                 markdown += convert_any(attachment.filename, BytesIO(attachment.content), "", settings)
+        case ".pdf":
+            if settings.use_vlm:
+                markdown = convert_pdf_with_vlm(file, settings)
+            else:
+                markdown = convert_pdf(file, settings)
+        case ".pptx":
+            markdown = convert_pptx(file, settings)
+        case ".xlsx" | ".xls":
+            markdown = convert_excel(file, settings)
         case _:
             markdown = ""
     return markdown

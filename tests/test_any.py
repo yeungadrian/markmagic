@@ -81,6 +81,16 @@ def test_convert_any_html_eml_skip_attachment() -> None:
     assert markdown == expected_results
 
 
+def test_convert_any_pptx() -> None:
+    """Test convert any function for pptx."""
+    filename = "tests/data/pptx/sample.pptx"
+    with Path(filename).open("rb") as f:
+        markdown = convert_any(filename, f)
+    with Path("tests/data/pptx/sample.md").open() as f:
+        expected_results = f.read()
+    assert markdown == expected_results
+
+
 def test_convert_any_zip() -> None:
     """Test convert any function for zip."""
     filename = "tests/data/unknown/msft_pr.zip"
