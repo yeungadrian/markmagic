@@ -715,7 +715,7 @@ wheels = [
 
 [[package]]
 name = "pypdf"
-version = "5.3.1"
+version = "5.4.0"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/da/5b/67df68ec4b934aae9ca89edfb43a869c5edb3bd504dd275be9e83001d3e9/pypdf-5.3.1.tar.gz", hash = "sha256:0b9b715252b3c60bacc052e6a780e8b742cee9b9a2135f6007bb018e22a5adad", size = 5011845 }
 wheels = [
