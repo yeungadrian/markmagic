@@ -29,5 +29,5 @@ class Settings(BaseSettings):
     @field_validator("tablefmt")
     def validate_tablefmt(cls, v: str) -> str:
         """Validate tablefmt."""
-        assert v in tabulate_formats  # Type checkers do not support unpacking into a Literal
+        assert v in tabulate_formats
         return v
