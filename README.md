@@ -28,10 +28,10 @@ API_KEY="REPLACE"
 
 ```py
 from pathlib import Path
-from markmagic import convert_any
+from markmagic import Settings, convert_any
 
+settings = Settings(use_vlm=True)
 with Path("tests/data/pdf/msft_ar.pdf").open("rb") as f:
-    settings = Settings(use_vlm=True)
     convert_any(filename="msft_ar.pdf", file=f, settings=settings)
 ```
 
@@ -41,10 +41,5 @@ with Path("tests/data/pdf/msft_ar.pdf").open("rb") as f:
 - markmagic uses python-docx so cannot extract text from shapes / images (consider using [python-mammoth](https://github.com/mwilliamson/python-mammoth) + [markdownify](https://github.com/matthewwithanm/python-markdownify))
 
 ## Goals / Motivation
-- Most consistent way of sending data to llms is in markdown
-- Understand python tooling landscape and what a set of good lightweight options look like
 - OCR is just neural nets so why not just use vision language models for ocr?
 - OCRBenchmark https://github.com/open-compass/VLMEvalKit?tab=readme-ov-file
-
-## TODOs:
-- TBD
