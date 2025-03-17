@@ -8,5 +8,8 @@ updates:
       - "/"
       - ".github/actions/*"
     schedule:
-      # Check for updates to GitHub Actions every week
+      interval: "weekly"
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
       interval: "weekly"
